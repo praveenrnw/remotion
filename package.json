@@ -1,0 +1,22 @@
+{
+  "name": "remotion",
+  "version": "0.0.1",
+  "description": "System Thinking Lessons — Remotion video project",
+  "private": true,
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion render",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.446",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.446"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.4.5"
+  }
+}
