@@ -1,6 +1,8 @@
 # Nativewit — Company Introduction Video
 
-A **23-second, 1920×1080 company introduction video** for [Nativewit Technologies](https://www.nativewit.in/) built entirely with [Remotion](https://www.remotion.dev/) and React. No video editor. Every frame is code.
+An **80-second, 1920×1080 company introduction video** for [Nativewit Technologies](https://nativewit.in) built entirely with [Remotion](https://www.remotion.dev/) and React. No video editor. Every frame is code.
+
+Includes a recorded voiceover synced frame-precisely to the SRT transcript, plus a background music track.
 
 ![Nativewit Logo](public/logo.png)
 
@@ -8,14 +10,27 @@ A **23-second, 1920×1080 company introduction video** for [Nativewit Technologi
 
 ## Preview
 
-| Scene | Duration | Content |
+| Scene | Frames | Duration | VO span | Content |
+|---|---|---|---|---|
+| Hook | 150 | 5s | 00:00–00:05 | Product screen flashes + opening statement |
+| Problem | 300 | 10s | 00:05–00:15 | Founder pain points — speed vs. wrong partners |
+| Authority | 540 | 18s | 00:15–00:33 | "We're Nativewit" — logo, stats, verticals |
+| Proof | 450 | 15s | 00:33–00:48 | 4 shipped product categories + cross-domain tagline |
+| Differentiator | 570 | 19s | 00:48–01:07 | Co-founder mindset · hard questions · AI embedded |
+| CTA | 390 | 13s | 01:07–01:20 | Logo + CTA line + nativewit.in |
+
+**Total: 2400 frames · 80 seconds · 30fps · 1920×1080 · H.264**
+
+---
+
+## Audio
+
+| File | Role | Volume |
 |---|---|---|
-| Brand Intro | 3s | Logo reveal with red radial glow |
-| Hero Statement | 3s | "We engineer products that ship." |
-| Services | 5s | Product Engineering · AI Integration · CTO-as-a-Service |
-| Stats | 4s | 30+ products · 5.0 Clutch · 12 weeks · 99.7% crash-free |
-| Process | 4s | Discover → Architect → Build → Launch |
-| Outro | 4s | CTA — "Ready to build your next product?" |
+| `public/voiceover.mp3` | Recorded VO — synced to SRT transcript | 100% |
+| `public/music.mp3` | Background music | 15% |
+
+All animation keyframes are mapped to precise transcript timestamps so on-screen text reveals match the spoken word.
 
 ---
 
@@ -52,10 +67,10 @@ Opens **http://localhost:3000** — select any composition from the sidebar to p
 ### Render to MP4
 
 ```bash
-npm run build
+npx remotion render NativewitIntro out/nativewit-final.mp4
 ```
 
-Outputs `out/NativewitIntro.mp4` — 1920×1080, 30fps, H.264, ~2.2 MB.
+Outputs `out/nativewit-final.mp4` — 1920×1080, 30fps, H.264, ~5.7 MB.
 
 ---
 
@@ -64,23 +79,23 @@ Outputs `out/NativewitIntro.mp4` — 1920×1080, 30fps, H.264, ~2.2 MB.
 ```
 remotion/
 ├── public/
-│   └── logo.png                 # Nativewit brand logo
+│   ├── logo.png                 # Nativewit brand logo
+│   ├── voiceover.mp3            # Recorded voiceover — synced to transcript
+│   └── music.mp3                # Background music track
 ├── src/
 │   ├── index.ts                 # Entry — registerRoot()
-│   ├── Root.tsx                 # Registers all Compositions
-│   ├── theme.ts                 # Brand colors & font (from nativewit.in)
+│   ├── Root.tsx                 # Registers all compositions
+│   ├── theme.ts                 # Brand colors & fonts
 │   ├── compositions/
-│   │   └── NativewitIntro.tsx   # Main 23s composition (orchestrates scenes)
-│   ├── scenes/
-│   │   ├── BrandIntro.tsx       # Logo reveal
-│   │   ├── HeroStatement.tsx    # Tagline
-│   │   ├── Services.tsx         # Three service cards
-│   │   ├── Stats.tsx            # Animated metric counters
-│   │   ├── Process.tsx          # 4-step process flow
-│   │   └── Outro.tsx            # CTA + contact
-│   └── utils/
-│       └── markdown.ts          # Animation helper utilities
-├── system_design.md             # Full architecture & component docs
+│   │   └── NativewitIntro.tsx   # Main 80s composition — scene orchestration + audio
+│   └── scenes/
+│       ├── Hook.tsx             # 0–5s — opening product flashes + statement
+│       ├── Problem.tsx          # 5–15s — founder pain points
+│       ├── Authority.tsx        # 15–33s — brand identity + credibility stats
+│       ├── Proof.tsx            # 33–48s — 4 product categories shipped
+│       ├── Differentiator.tsx   # 48–67s — co-founder mindset + AI
+│       └── CTA.tsx              # 67–80s — call to action
+├── system_design.md             # Architecture & component docs
 ├── remotion.config.ts           # Output settings
 └── package.json
 ```
@@ -89,7 +104,7 @@ remotion/
 
 ## Brand Theme
 
-All scenes use the exact color palette from [nativewit.in](https://www.nativewit.in/):
+All scenes use the color palette from [nativewit.in](https://nativewit.in):
 
 | Token | Value | Usage |
 |---|---|---|
@@ -98,7 +113,7 @@ All scenes use the exact color palette from [nativewit.in](https://www.nativewit
 | Border | `rgba(255,255,255,0.1)` | Card borders |
 | Text Primary | `#ffffff` | Headlines |
 | Text Secondary | `rgba(255,255,255,0.5)` | Body text |
-| Accent | `#e63434` | Buttons, labels, glows |
+| Accent | `#e63434` | Highlights, glows, labels |
 | Font | Nunito → Inter → sans-serif | All text |
 
 ---
@@ -108,13 +123,13 @@ All scenes use the exact color palette from [nativewit.in](https://www.nativewit
 ```
 index.ts → Root.tsx → NativewitIntro.tsx
                            │
-              ┌────────────┼─────────────────┐
-         BrandIntro  HeroStatement  Services  Stats  Process  Outro
-              │                                │
-           logo.png                        theme.ts
+                    Audio (VO + music)
+                           │
+          ┌────────────────┼─────────────────────┐
+        Hook  Problem  Authority  Proof  Differentiator  CTA
+                           │
+                       theme.ts / logo.png
 ```
-
-See [system_design.md](system_design.md) for a full explanation of every component, Remotion concepts, and how to modify the video.
 
 ---
 
@@ -123,7 +138,7 @@ See [system_design.md](system_design.md) for a full explanation of every compone
 | Command | Description |
 |---|---|
 | `npm run dev` | Start Remotion Studio at localhost:3000 |
-| `npm run build` | Render `NativewitIntro` to `out/NativewitIntro.mp4` |
+| `npx remotion render NativewitIntro out/nativewit-final.mp4` | Render final video |
 | `npm run upgrade` | Upgrade Remotion packages |
 
 ---
