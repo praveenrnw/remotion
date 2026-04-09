@@ -13,7 +13,7 @@ import { theme } from "../theme";
 /**
  * AUTHORITY — 16.5–29.5s (390 frames)
  * Logo reveal → animated stats counters → world-map dots.
- * VO says: "We're NativeWit, product engineering studio, 5+ years,
+ * VO says: "We're Nativewit, product engineering studio, 5+ years,
  * 30+ products, clients across AU/US/Asia."
  */
 
@@ -223,7 +223,7 @@ export const Authority: React.FC = () => {
           }}
         >
           We're{" "}
-          <span style={{ color: theme.colors.accent }}>NativeWit.</span>
+          <span style={{ color: theme.colors.accent }}>Nativewit.</span>
         </h1>
 
         {/* Subtitle + device icons */}

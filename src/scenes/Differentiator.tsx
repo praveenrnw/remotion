@@ -789,7 +789,7 @@ export const Differentiator: React.FC = () => {
                 textTransform: "uppercase",
               }}
             >
-              NativeWit
+              Nativewit
             </span>
           </div>
         </div>
