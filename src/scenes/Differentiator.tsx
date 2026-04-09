@@ -167,7 +167,7 @@ export const Differentiator: React.FC = () => {
             }),
           }}
         >
-          <svg width="90" height="90" viewBox="0 0 90 90"
+          <svg width="120" height="120" viewBox="0 0 90 90"
             style={{
               transform: `rotate(${frame * 0.5}deg) scale(${1 + breathe * 0.04})`,
               filter: `drop-shadow(0 0 16px ${theme.colors.accent}44)`,
@@ -181,7 +181,7 @@ export const Differentiator: React.FC = () => {
           </svg>
           <span
             style={{
-              fontSize: 32,
+              fontSize: 42,
               fontWeight: 900,
               color: theme.colors.accent,
               letterSpacing: 4,
@@ -379,12 +379,13 @@ export const Differentiator: React.FC = () => {
 
         <span
           style={{
-            fontSize: 30,
+            fontSize: 36,
             fontWeight: 900,
             color: theme.colors.accent,
             letterSpacing: 4,
             textTransform: "uppercase",
             transform: `translateY(${breatheY}px)`,
+            marginTop: 40,
           }}
         >
           How we think
@@ -438,8 +439,8 @@ export const Differentiator: React.FC = () => {
         </svg>
 
         <svg
-          width="700"
-          height="400"
+          width="900"
+          height="520"
           viewBox="0 0 700 400"
           fill="none"
         >
@@ -765,15 +766,15 @@ export const Differentiator: React.FC = () => {
         }}
       >
         {/* Partnership Venn diagram */}
-        <div style={{ position: "relative", width: 520, height: 280, zIndex: 1 }}>
+        <div style={{ position: "relative", width: 660, height: 360, zIndex: 1 }}>
           {/* Left circle — YOU */}
           <div
             style={{
               position: "absolute",
               left: 30,
-              top: 20,
-              width: 240,
-              height: 240,
+              top: 30,
+              width: 300,
+              height: 300,
               borderRadius: "50%",
               background: `${theme.colors.textSecondary}10`,
               border: `3px solid ${theme.colors.textSecondary}44`,
@@ -794,12 +795,12 @@ export const Differentiator: React.FC = () => {
           >
             <span
               style={{
-                fontSize: 28,
+                fontSize: 34,
                 fontWeight: 900,
                 color: theme.colors.textSecondary,
                 letterSpacing: 3,
                 textTransform: "uppercase",
-                marginLeft: -50,
+                marginLeft: -60,
               }}
             >
               YOU
@@ -810,10 +811,10 @@ export const Differentiator: React.FC = () => {
           <div
             style={{
               position: "absolute",
-              left: 250,
-              top: 20,
-              width: 240,
-              height: 240,
+              left: 330,
+              top: 30,
+              width: 300,
+              height: 300,
               borderRadius: "50%",
               background: `${theme.colors.accent}10`,
               border: `3px solid ${theme.colors.accent}44`,
@@ -834,12 +835,12 @@ export const Differentiator: React.FC = () => {
           >
             <span
               style={{
-                fontSize: 24,
+                fontSize: 30,
                 fontWeight: 900,
                 color: theme.colors.accent,
                 letterSpacing: 3,
                 textTransform: "uppercase",
-                marginRight: -50,
+                marginRight: -60,
               }}
             >
               NATIVEWIT
@@ -850,10 +851,10 @@ export const Differentiator: React.FC = () => {
           <div
             style={{
               position: "absolute",
-              left: 210,
-              top: 50,
-              width: 100,
-              height: 180,
+              left: 270,
+              top: 60,
+              width: 120,
+              height: 240,
               borderRadius: "50%",
               background: `radial-gradient(circle, ${theme.colors.accent}30, transparent)`,
               opacity: interpolate(frame, [310, 335], [0, 1], {
@@ -867,8 +868,8 @@ export const Differentiator: React.FC = () => {
           <div
             style={{
               position: "absolute",
-              left: 230,
-              top: 105,
+              left: 295,
+              top: 135,
               opacity: interpolate(frame, [320, 340], [0, 1], {
                 extrapolateLeft: "clamp",
                 extrapolateRight: "clamp",
@@ -1036,8 +1037,8 @@ export const Differentiator: React.FC = () => {
             <div
               key={layer.label}
               style={{
-                width: 560,
-                height: 70,
+                width: 700,
+                height: 80,
                 borderRadius: 16,
                 background: theme.colors.surface,
                 border: `2px solid ${layer.color}44`,

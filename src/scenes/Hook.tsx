@@ -200,7 +200,7 @@ export const Hook: React.FC = () => {
             style={{
               position: "absolute",
               left: x + gx,
-              top: 100 + gy + fractureY,
+              top: 190 + gy + fractureY,
               width: 280,
               height: 500,
               borderRadius: 18,

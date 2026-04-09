@@ -376,7 +376,7 @@ export const Authority: React.FC = () => {
         </div>
       </div>
 
-      {/* ─── World map region circles with orbital animation ──── */}
+      {/* ─── World map region circles — outside brand text with dotted lines ──── */}
       <div
         style={{
           position: "absolute",
@@ -384,42 +384,25 @@ export const Authority: React.FC = () => {
           opacity: mapOpacity,
         }}
       >
-        {/* Large orbital ring */}
+        {/* Large circular path (dotted) around "We're Nativewit" */}
         <div
           style={{
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 420,
-            height: 420,
+            width: 580,
+            height: 580,
             borderRadius: "50%",
-            border: `2px solid ${theme.colors.border}`,
-            opacity: interpolate(frame, [275, 295], [0, 0.3], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            }),
-          }}
-        />
-        {/* Inner ring */}
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 280,
-            height: 280,
-            borderRadius: "50%",
-            border: `1px solid ${theme.colors.accent}22`,
-            opacity: interpolate(frame, [280, 300], [0, 0.2], {
+            border: `2px dashed ${theme.colors.border}`,
+            opacity: interpolate(frame, [275, 295], [0, 0.35], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
             }),
           }}
         />
 
-        {/* Rotating region circles on orbital path */}
+        {/* Region circles orbiting outside on the dotted circle */}
         {MAP_DOTS.map((dot, i) => {
           const dotProgress = interpolate(frame - dot.delay, [0, 20], [0, 1], {
             extrapolateLeft: "clamp",
@@ -431,7 +414,7 @@ export const Authority: React.FC = () => {
           const baseAngle = [0, 120, 240][i]; /* 120° apart */
           const orbitAngle = baseAngle + (frame - dot.delay) * 0.35;
           const orbitRad = (orbitAngle * Math.PI) / 180;
-          const orbitRadius = 190;
+          const orbitRadius = 290;
           const cx = 960 + Math.cos(orbitRad) * orbitRadius;
           const cy = 540 + Math.sin(orbitRad) * orbitRadius;
 
@@ -487,23 +470,6 @@ export const Authority: React.FC = () => {
                   </span>
                 </div>
               </div>
-
-              {/* Connection arc to center */}
-              {dotProgress > 0.5 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 960,
-                    top: 540,
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: theme.colors.accent,
-                    opacity: 0.3,
-                    transform: `translate(${(cx - 960) * 0.5 - 3}px, ${(cy - 540) * 0.5 - 3}px)`,
-                  }}
-                />
-              )}
             </div>
           );
         })}
@@ -532,37 +498,52 @@ export const Authority: React.FC = () => {
           </svg>
         </div>
 
-        {/* Connection arcs between regions (SVG) */}
+        {/* Dotted connection lines from center to each region + traveling dot */}
         <svg
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
         >
           {MAP_DOTS.map((dot, i) => {
-            const nextDot = MAP_DOTS[(i + 1) % MAP_DOTS.length];
             const dP = interpolate(frame - dot.delay, [0, 20], [0, 1], {
               extrapolateLeft: "clamp", extrapolateRight: "clamp",
             });
-            const nP = interpolate(frame - nextDot.delay, [0, 20], [0, 1], {
-              extrapolateLeft: "clamp", extrapolateRight: "clamp",
-            });
 
-            if (dP < 0.5 || nP < 0.5) return null;
+            if (dP < 0.5) return null;
 
-            const a1 = ([0, 120, 240][i] + (frame - dot.delay) * 0.35) * Math.PI / 180;
-            const a2 = ([0, 120, 240][(i + 1) % 3] + (frame - nextDot.delay) * 0.35) * Math.PI / 180;
-            const r = 190;
-            const x1 = 960 + Math.cos(a1) * r;
-            const y1 = 540 + Math.sin(a1) * r;
-            const x2 = 960 + Math.cos(a2) * r;
-            const y2 = 540 + Math.sin(a2) * r;
+            const a = ([0, 120, 240][i] + (frame - dot.delay) * 0.35) * Math.PI / 180;
+            const r = 290;
+            const ex = 960 + Math.cos(a) * r;
+            const ey = 540 + Math.sin(a) * r;
+
+            /* Curved dotted path from center to region circle */
+            const mx = 960 + Math.cos(a) * r * 0.5 + Math.sin(a) * 40;
+            const my = 540 + Math.sin(a) * r * 0.5 - Math.cos(a) * 40;
+
+            /* Traveling dot along the path */
+            const travelT = ((frame - dot.delay) % 60) / 60;
+            const t = travelT;
+            const tx = (1 - t) * (1 - t) * 960 + 2 * (1 - t) * t * mx + t * t * ex;
+            const ty = (1 - t) * (1 - t) * 540 + 2 * (1 - t) * t * my + t * t * ey;
 
             return (
-              <line key={`arc-${i}`}
-                x1={x1} y1={y1} x2={x2} y2={y2}
-                stroke={theme.colors.accent}
-                strokeWidth="1"
-                opacity="0.15"
-                strokeDasharray="6 4"
-              />
+              <g key={`conn-${i}`}>
+                {/* Dotted curved path */}
+                <path
+                  d={`M 960 540 Q ${mx} ${my} ${ex} ${ey}`}
+                  fill="none"
+                  stroke={theme.colors.accent}
+                  strokeWidth="1.5"
+                  strokeDasharray="4 4"
+                  opacity="0.3"
+                />
+                {/* Traveling dot */}
+                <circle
+                  cx={tx}
+                  cy={ty}
+                  r="4"
+                  fill={theme.colors.accent}
+                  opacity={interpolate(travelT, [0, 0.2, 0.8, 1], [0, 0.8, 0.8, 0])}
+                />
+              </g>
             );
           })}
         </svg>

@@ -176,7 +176,7 @@ export const CTA: React.FC = () => {
       >
         <Img
           src={staticFile("logo.png")}
-          style={{ width: 80, height: "auto" }}
+          style={{ width: 140, height: "auto" }}
         />
       </div>
 

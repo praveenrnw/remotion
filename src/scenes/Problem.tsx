@@ -277,62 +277,30 @@ export const Problem: React.FC = () => {
           background: `radial-gradient(ellipse at ${orbX}% 50%, ${theme.colors.accent}0c 0%, transparent 40%)`,
         }}
       />
-      {/* ── "Founder" + "Product Lead" — big centered animated icons ──── */}
+      {/* ── "Founder" + "Product Lead" — subtle icons below the track line ──── */}
       {founderReveal > 0 && (
         <div
           style={{
             position: "absolute",
-            top: "10%",
+            top: "58%",
             left: "12%",
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
-            gap: 16,
+            gap: 12,
             opacity: founderReveal * labelsFade,
+            transform: `translateY(${breatheY}px)`,
           }}
         >
-          {/* Large animated person SVG */}
-          <div style={{ position: "relative" }}>
-            <svg
-              width="120"
-              height="140"
-              viewBox="0 0 120 140"
-              style={{
-                transform: `scale(${1 + breathe * 0.06})`,
-                filter: `drop-shadow(0 0 20px ${theme.colors.textSecondary}44)`,
-              }}
-            >
-              {/* Head */}
-              <circle cx="60" cy="35" r="26" fill={theme.colors.textSecondary} opacity="0.9" />
-              {/* Eyes */}
-              <circle cx="50" cy="32" r="3" fill={theme.colors.bg} opacity="0.6" />
-              <circle cx="70" cy="32" r="3" fill={theme.colors.bg} opacity="0.6" />
-              {/* Body */}
-              <path d="M20 110 Q20 75 60 66 Q100 75 100 110 L100 140 L20 140 Z" fill={theme.colors.textSecondary} opacity="0.8" />
-              {/* Tie accent */}
-              <path d="M55 66 L60 90 L65 66" fill={theme.colors.accent} opacity="0.7" />
-              {/* Shoulder lines */}
-              <path d="M20 110 Q20 85 45 75" fill="none" stroke={theme.colors.textSecondary} strokeWidth="2" opacity="0.4" />
-              <path d="M100 110 Q100 85 75 75" fill="none" stroke={theme.colors.textSecondary} strokeWidth="2" opacity="0.4" />
-            </svg>
-            {/* Glow ring */}
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: 160,
-                height: 160,
-                borderRadius: "50%",
-                border: `2px solid ${theme.colors.textSecondary}`,
-                opacity: 0.15 + breathe * 0.1,
-              }}
-            />
-          </div>
+          {/* Small person icon */}
+          <svg width="28" height="28" viewBox="0 0 28 28"
+            style={{ filter: `drop-shadow(0 0 6px ${theme.colors.textSecondary}44)` }}
+          >
+            <circle cx="14" cy="8" r="5" fill={theme.colors.textSecondary} opacity="0.7" />
+            <path d="M4 26 Q4 16 14 14 Q24 16 24 26" fill={theme.colors.textSecondary} opacity="0.6" />
+          </svg>
           <span
             style={{
-              fontSize: 26,
+              fontSize: 24,
               fontWeight: 900,
               color: theme.colors.textSecondary,
               letterSpacing: 4,
@@ -347,56 +315,26 @@ export const Problem: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: "10%",
+            top: "58%",
             left: "55%",
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
-            gap: 16,
+            gap: 12,
             opacity: leadReveal * labelsFade,
+            transform: `translateY(${breatheY}px)`,
           }}
         >
-          {/* Large animated briefcase SVG */}
-          <div style={{ position: "relative" }}>
-            <svg
-              width="130"
-              height="120"
-              viewBox="0 0 130 120"
-              style={{
-                transform: `scale(${1 + breathe * 0.06})`,
-                filter: `drop-shadow(0 0 20px ${theme.colors.textSecondary}44)`,
-              }}
-            >
-              {/* Handle */}
-              <path d="M42 25 L42 15 Q42 5 52 5 L78 5 Q88 5 88 15 L88 25" fill="none" stroke={theme.colors.textSecondary} strokeWidth="4" strokeLinecap="round" />
-              {/* Main case */}
-              <rect x="10" y="25" width="110" height="75" rx="10" fill={theme.colors.textSecondary} opacity="0.85" />
-              {/* Case clasp */}
-              <rect x="55" y="50" width="20" height="14" rx="3" fill={theme.colors.bg} opacity="0.5" />
-              {/* Documents peeking out */}
-              <rect x="30" y="30" width="35" height="5" rx="2" fill={theme.colors.bg} opacity="0.25" />
-              <rect x="30" y="40" width="25" height="5" rx="2" fill={theme.colors.bg} opacity="0.2" />
-              {/* Accent stripe */}
-              <rect x="10" y="70" width="110" height="4" fill={theme.colors.accent} opacity="0.4" />
-            </svg>
-            {/* Glow ring */}
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: 170,
-                height: 160,
-                borderRadius: "50%",
-                border: `2px solid ${theme.colors.textSecondary}`,
-                opacity: 0.15 + breathe * 0.1,
-              }}
-            />
-          </div>
+          {/* Small briefcase icon */}
+          <svg width="28" height="24" viewBox="0 0 28 24"
+            style={{ filter: `drop-shadow(0 0 6px ${theme.colors.textSecondary}44)` }}
+          >
+            <path d="M9 5 L9 2 Q9 0 11 0 L17 0 Q19 0 19 2 L19 5" fill="none" stroke={theme.colors.textSecondary} strokeWidth="1.5" />
+            <rect x="2" y="5" width="24" height="16" rx="3" fill={theme.colors.textSecondary} opacity="0.7" />
+            <rect x="11" y="11" width="6" height="4" rx="1" fill={theme.colors.bg} opacity="0.4" />
+          </svg>
           <span
             style={{
-              fontSize: 26,
+              fontSize: 24,
               fontWeight: 900,
               color: theme.colors.textSecondary,
               letterSpacing: 4,
@@ -568,7 +506,7 @@ export const Problem: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: "15%",
+            top: "5%",
             left: "52%",
             display: "flex",
             flexDirection: "column",
@@ -689,7 +627,7 @@ export const Problem: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: "13%",
+            top: "3%",
             left: "70%",
             display: "flex",
             flexDirection: "column",
