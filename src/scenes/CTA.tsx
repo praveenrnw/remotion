@@ -50,6 +50,27 @@ export const CTA: React.FC = () => {
     easing: Easing.bezier(0.19, 1, 0.22, 1),
   });
 
+  /* ── Text scale entrance ────────────────────────────────── */
+  const textScale = interpolate(
+    spring({ frame: frame - 75, fps, config: { damping: 60, mass: 0.4 } }),
+    [0, 1],
+    [0.85, 1],
+  );
+
+  /* ── Underline after text reveals ───────────────────────── */
+  const underlineWidth = interpolate(frame, [100, 135], [0, 100], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.19, 1, 0.22, 1),
+  });
+
+  /* ── Shimmer sweep across text ──────────────────────────── */
+  const shimmerX = interpolate(frame, [105, 145], [-100, 200], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+  });
+
   /* ── URL ────────────────────────────────────────────────── */
   const urlProgress = spring({
     frame: frame - 120,
@@ -161,36 +182,51 @@ export const CTA: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: "32%",
+            top: "30%",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            gap: 16,
+            gap: 12,
             opacity: buildReveal * buildFade,
           }}
         >
-          {/* Rising building blocks */}
-          {[0, 1, 2].map((i) => {
-            const blockDelay = 13 + i * 10;
-            const blockProgress = spring({
-              frame: frame - blockDelay,
-              fps,
-              config: { damping: 60, mass: 0.3 },
-            });
-            return (
-              <div
-                key={`block-${i}`}
-                style={{
-                  width: 20 + i * 6,
-                  height: 28 + i * 12,
-                  borderRadius: 4,
-                  border: `2px solid ${theme.colors.accent}${i === 2 ? '' : '66'}`,
-                  background: i === 2 ? `${theme.colors.accent}18` : 'transparent',
-                  opacity: blockProgress,
-                  transform: `translateY(${interpolate(blockProgress, [0, 1], [15, 0])}px)`,
-                }}
-              />
-            );
-          })}
+          {/* Abstract assembling structure */}
+          <div style={{ display: "flex", alignItems: "flex-end", gap: 6 }}>
+            {[0, 1, 2, 3, 4].map((i) => {
+              const blockDelay = 13 + i * 8;
+              const blockProgress = spring({
+                frame: frame - blockDelay,
+                fps,
+                config: { damping: 50, mass: 0.3 },
+              });
+              const heights = [24, 36, 52, 40, 28];
+              const widths = [16, 18, 22, 18, 16];
+              return (
+                <div
+                  key={`block-${i}`}
+                  style={{
+                    width: widths[i],
+                    height: heights[i] * blockProgress,
+                    borderRadius: 3,
+                    background: i === 2
+                      ? `linear-gradient(to top, ${theme.colors.accent}55, ${theme.colors.accent})`
+                      : `linear-gradient(to top, ${theme.colors.accent}22, ${theme.colors.accent}55)`,
+                    border: `1px solid ${theme.colors.accent}${i === 2 ? '88' : '33'}`,
+                    transform: `translateY(${interpolate(blockProgress, [0, 1], [10, 0])}px)`,
+                  }}
+                />
+              );
+            })}
+          </div>
+          {/* Foundation line */}
+          <div
+            style={{
+              width: interpolate(buildReveal, [0, 1], [0, 120]),
+              height: 2,
+              background: `linear-gradient(90deg, transparent, ${theme.colors.accent}44, transparent)`,
+              borderRadius: 1,
+            }}
+          />
         </div>
       )}
 
@@ -207,19 +243,47 @@ export const CTA: React.FC = () => {
             letterSpacing: "-1.5px",
             maxWidth: 900,
             clipPath: `inset(0 ${100 - lineReveal}% 0 0)`,
+            transform: `scale(${textScale})`,
+            position: "relative",
           }}
         >
           <span style={{ color: theme.colors.accent }}>Let's talk.</span>
+          {/* Shimmer overlay */}
+          {lineReveal >= 100 && (
+            <span
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: `linear-gradient(90deg, transparent ${shimmerX - 20}%, rgba(255,255,255,0.15) ${shimmerX}%, transparent ${shimmerX + 20}%)`,
+                pointerEvents: "none",
+              }}
+            />
+          )}
         </h1>
+
+        {/* Accent underline */}
+        <div
+          style={{
+            width: `${underlineWidth}%`,
+            height: 3,
+            background: `linear-gradient(90deg, ${theme.colors.accent}, ${theme.colors.accentSoft})`,
+            borderRadius: 2,
+            marginTop: 6,
+            marginLeft: "auto",
+            marginRight: "auto",
+            boxShadow: underlineWidth > 50 ? `0 0 12px ${theme.colors.accent}44` : "none",
+          }}
+        />
+
         {/* Blinking cursor after text */}
         {lineReveal >= 100 && (
           <div
             style={{
               position: "absolute",
               right: -12,
-              top: "15%",
+              top: "10%",
               width: 3,
-              height: "70%",
+              height: "65%",
               background: theme.colors.accent,
               borderRadius: 1,
               opacity: Math.sin(frame * 0.15) > 0 ? 0.8 : 0,
