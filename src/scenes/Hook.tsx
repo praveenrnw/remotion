@@ -375,7 +375,7 @@ export const Hook: React.FC = () => {
               >
                 <span
                   style={{
-                    fontSize: 22,
+                    fontSize: 28,
                     fontWeight: 900,
                     color: theme.colors.accent,
                     letterSpacing: 6,

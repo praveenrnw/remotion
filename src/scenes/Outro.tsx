@@ -16,35 +16,34 @@ export const Outro: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  const headProgress = spring({ frame, fps, config: { damping: 80 } });
-  const headScale = interpolate(headProgress, [0, 1], [0.9, 1]);
+  const headProgress = interpolate(frame, [0, 20], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const headScale = interpolate(headProgress, [0, 1], [0.95, 1]);
   const headY = interpolate(headProgress, [0, 1], [30, 0]);
 
-  const subProgress = spring({
-    frame: frame - 15,
-    fps,
-    config: { damping: 100 },
+  const subProgress = interpolate(frame, [15, 35], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
   const subY = interpolate(subProgress, [0, 1], [20, 0]);
 
-  const ctaProgress = spring({
-    frame: frame - 30,
-    fps,
-    config: { damping: 80, mass: 0.6 },
+  const ctaProgress = interpolate(frame, [30, 50], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
-  const emailX = interpolate(ctaProgress, [0, 1], [-40, 0]);
+  const emailX = interpolate(ctaProgress, [0, 1], [-20, 0]);
 
-  const phoneProgress = spring({
-    frame: frame - 40,
-    fps,
-    config: { damping: 80, mass: 0.6 },
+  const phoneProgress = interpolate(frame, [40, 60], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
-  const phoneX = interpolate(phoneProgress, [0, 1], [40, 0]);
+  const phoneX = interpolate(phoneProgress, [0, 1], [20, 0]);
 
-  const footerProgress = spring({
-    frame: frame - 45,
-    fps,
-    config: { damping: 120 },
+  const footerProgress = interpolate(frame, [45, 65], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
 
   return (
@@ -76,8 +75,8 @@ export const Outro: React.FC = () => {
       {/* Heading */}
       <h1
         style={{
-          fontSize: 56,
-          fontWeight: 800,
+          fontSize: 68,
+          fontWeight: 900,
           color: theme.colors.textPrimary,
           margin: 0,
           textAlign: "center",
@@ -95,9 +94,9 @@ export const Outro: React.FC = () => {
       {/* Sub text */}
       <p
         style={{
-          fontSize: 20,
+          fontSize: 26,
           color: theme.colors.textSecondary,
-          margin: "24px 0 0",
+          margin: "28px 0 0",
           opacity: subProgress,
           transform: `translateY(${subY}px)`,
           textAlign: "center",
@@ -123,16 +122,20 @@ export const Outro: React.FC = () => {
             background: theme.colors.surface,
             border: `1px solid ${theme.colors.border}`,
             borderRadius: 12,
-            padding: "16px 40px",
+            padding: "18px 44px",
             display: "flex",
             alignItems: "center",
-            gap: 12,
+            gap: 14,
             opacity: ctaProgress,
             transform: `translateX(${emailX}px)`,
           }}
         >
-          <span style={{ fontSize: 20, color: theme.colors.accent, fontWeight: 700 }}>✉</span>
-          <span style={{ fontSize: 20, color: theme.colors.textPrimary, fontWeight: 600 }}>
+          {/* Email SVG icon */}
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none">
+            <rect x="1" y="1" width="22" height="18" rx="3" stroke={theme.colors.accent} strokeWidth="2" />
+            <polyline points="1,1 12,11 23,1" fill="none" stroke={theme.colors.accent} strokeWidth="2" />
+          </svg>
+          <span style={{ fontSize: 24, color: theme.colors.textPrimary, fontWeight: 700 }}>
             hello@nativewit.in
           </span>
         </div>
@@ -141,16 +144,20 @@ export const Outro: React.FC = () => {
             background: theme.colors.surface,
             border: `1px solid ${theme.colors.border}`,
             borderRadius: 12,
-            padding: "14px 40px",
+            padding: "16px 44px",
             display: "flex",
             alignItems: "center",
-            gap: 12,
+            gap: 14,
             opacity: phoneProgress,
             transform: `translateX(${phoneX}px)`,
           }}
         >
-          <span style={{ fontSize: 18, color: theme.colors.accent, fontWeight: 700 }}>☎</span>
-          <span style={{ fontSize: 18, color: theme.colors.textPrimary, fontWeight: 600 }}>
+          {/* Phone SVG icon */}
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M5 1h12a2 2 0 012 2v16a2 2 0 01-2 2H5a2 2 0 01-2-2V3a2 2 0 012-2z" stroke={theme.colors.accent} strokeWidth="2" />
+            <line x1="8" y1="18" x2="14" y2="18" stroke={theme.colors.accent} strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <span style={{ fontSize: 22, color: theme.colors.textPrimary, fontWeight: 700 }}>
             +91 99443 96311
           </span>
         </div>
@@ -164,12 +171,23 @@ export const Outro: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 8,
+          gap: 10,
           opacity: footerProgress,
         }}
       >
-        <span style={{ fontSize: 16, color: theme.colors.textSecondary, fontWeight: 500 }}>
-          nativewit.in
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          {/* Globe icon */}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke={theme.colors.textSecondary} strokeWidth="2" />
+            <ellipse cx="12" cy="12" rx="4" ry="10" stroke={theme.colors.textSecondary} strokeWidth="1.5" />
+            <line x1="2" y1="12" x2="22" y2="12" stroke={theme.colors.textSecondary} strokeWidth="1.5" />
+          </svg>
+          <span style={{ fontSize: 22, color: theme.colors.textSecondary, fontWeight: 700 }}>
+            www.nativewit.in
+          </span>
+        </div>
+        <span style={{ fontSize: 18, color: theme.colors.textMuted, fontWeight: 600 }}>
+          hello@nativewit.in
         </span>
       </div>
     </AbsoluteFill>

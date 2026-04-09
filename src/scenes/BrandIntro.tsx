@@ -84,8 +84,8 @@ export const BrandIntro: React.FC = () => {
       {/* Company name */}
       <h1
         style={{
-          fontSize: 68,
-          fontWeight: 800,
+          fontSize: 80,
+          fontWeight: 900,
           color: theme.colors.textPrimary,
           margin: 0,
           opacity: nameProgress,
@@ -100,8 +100,8 @@ export const BrandIntro: React.FC = () => {
       {/* Subtitle */}
       <p
         style={{
-          fontSize: 20,
-          fontWeight: 500,
+          fontSize: 26,
+          fontWeight: 600,
           color: theme.colors.textSecondary,
           margin: "18px 0 0",
           opacity: subProgress,

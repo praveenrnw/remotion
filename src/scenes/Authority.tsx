@@ -103,6 +103,11 @@ export const Authority: React.FC = () => {
     config: { damping: 100 },
   });
 
+  /* ── Continuous 2-second breathing cycle ─────────────────── */
+  const breathe = Math.sin(frame * Math.PI / 30);
+  const breatheY = breathe * 3;
+  const breatheScale = 1 + breathe * 0.01;
+
   return (
     <AbsoluteFill
       style={{
@@ -214,12 +219,13 @@ export const Authority: React.FC = () => {
         {/* Brand name */}
         <h1
           style={{
-            fontSize: 68,
-            fontWeight: 800,
+            fontSize: 80,
+            fontWeight: 900,
             color: theme.colors.textPrimary,
             margin: 0,
             letterSpacing: "-2px",
             clipPath: `inset(0 ${100 - nameReveal}% 0 0)`,
+            transform: `translateY(${breatheY * 0.5}px)`,
           }}
         >
           We're{" "}
@@ -263,8 +269,8 @@ export const Authority: React.FC = () => {
 
           <span
             style={{
-              fontSize: 20,
-              fontWeight: 500,
+              fontSize: 30,
+              fontWeight: 700,
               color: theme.colors.textSecondary,
               letterSpacing: 1,
             }}
@@ -312,14 +318,15 @@ export const Authority: React.FC = () => {
           display: "flex",
           gap: 80,
           alignItems: "center",
+          transform: `translateY(${breatheY}px) scale(${breatheScale})`,
         }}
       >
         {/* Years counter */}
         <div style={{ textAlign: "center", opacity: yearsOpacity }}>
           <div
             style={{
-              fontSize: 56,
-              fontWeight: 800,
+              fontSize: 72,
+              fontWeight: 900,
               color: theme.colors.accent,
               lineHeight: 1,
               letterSpacing: "-1px",
@@ -329,10 +336,10 @@ export const Authority: React.FC = () => {
           </div>
           <p
             style={{
-              fontSize: 13,
+              fontSize: 22,
               color: theme.colors.textMuted,
-              margin: "8px 0 0",
-              fontWeight: 600,
+              margin: "10px 0 0",
+              fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: 2.5,
             }}
@@ -345,8 +352,8 @@ export const Authority: React.FC = () => {
         <div style={{ textAlign: "center", opacity: productsOpacity }}>
           <div
             style={{
-              fontSize: 56,
-              fontWeight: 800,
+              fontSize: 72,
+              fontWeight: 900,
               color: theme.colors.accent,
               lineHeight: 1,
               letterSpacing: "-1px",
@@ -356,10 +363,10 @@ export const Authority: React.FC = () => {
           </div>
           <p
             style={{
-              fontSize: 13,
+              fontSize: 22,
               color: theme.colors.textMuted,
-              margin: "8px 0 0",
-              fontWeight: 600,
+              margin: "10px 0 0",
+              fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: 2.5,
             }}
@@ -456,8 +463,8 @@ export const Authority: React.FC = () => {
                   top: 18,
                   left: "50%",
                   transform: "translateX(-50%)",
-                  fontSize: 11,
-                  fontWeight: 700,
+                  fontSize: 20,
+                  fontWeight: 800,
                   color: theme.colors.textMuted,
                   letterSpacing: 2,
                   textTransform: "uppercase",

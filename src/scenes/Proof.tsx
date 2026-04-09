@@ -2,9 +2,7 @@ import {
   AbsoluteFill,
   Easing,
   interpolate,
-  spring,
   useCurrentFrame,
-  useVideoConfig,
 } from "remotion";
 import { theme } from "../theme";
 
@@ -22,7 +20,6 @@ const CATEGORIES = [
 
 export const Proof: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
   /* ── Scene transitions ──────────────────────────────────── */
   const entryFade = interpolate(frame, [0, 15], [0, 1], {
@@ -34,17 +31,17 @@ export const Proof: React.FC = () => {
   });
 
   /* ── "Shipped in weeks" calendar animation (frame 339) ─── */
-  const calendarProgress = spring({
-    frame: frame - 339,
-    fps,
-    config: { damping: 80, mass: 0.5 },
+  const calendarProgress = interpolate(frame, [339, 360], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.19, 1, 0.22, 1),
   });
 
   /* ── "Real products, real users" highlight (frame 271) ─── */
-  const realUsersReveal = spring({
-    frame: frame - 271,
-    fps,
-    config: { damping: 80, mass: 0.5 },
+  const realUsersReveal = interpolate(frame, [271, 292], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.19, 1, 0.22, 1),
   });
   const realUsersPulse = frame >= 271 && frame < 339
     ? 0.5 + Math.sin((frame - 271) * 0.12) * 0.5
@@ -56,6 +53,10 @@ export const Proof: React.FC = () => {
     extrapolateRight: "clamp",
     easing: Easing.bezier(0.19, 1, 0.22, 1),
   });
+
+  /* ── Continuous 2-second breathing cycle ─────────────────── */
+  const breathe = Math.sin(frame * Math.PI / 30);
+  const breatheY = breathe * 3;
 
   return (
     <AbsoluteFill
@@ -98,8 +99,8 @@ export const Proof: React.FC = () => {
           position: "absolute",
           top: 60,
           left: 120,
-          fontSize: 12,
-          fontWeight: 700,
+          fontSize: 24,
+          fontWeight: 800,
           color: theme.colors.accent,
           letterSpacing: 3,
           textTransform: "uppercase",
@@ -125,12 +126,20 @@ export const Proof: React.FC = () => {
         }}
       >
         {CATEGORIES.map((cat, i) => {
-          const cardProgress = spring({
-            frame: frame - cat.delay,
-            fps,
-            config: { damping: 80, mass: 0.5 },
-          });
+          const cardProgress = interpolate(
+            frame - cat.delay,
+            [0, 25],
+            [0, 1],
+            {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+              easing: Easing.bezier(0.19, 1, 0.22, 1),
+            },
+          );
           const cardY = interpolate(cardProgress, [0, 1], [30, 0]);
+
+          /* Staggered card float for continuous movement */
+          const cardBreathe = Math.sin((frame + i * 20) * Math.PI / 30) * 3;
 
           /* Active glow while VO discusses this category */
           const nextDelay = CATEGORIES[i + 1]?.delay ?? 339;
@@ -145,7 +154,7 @@ export const Proof: React.FC = () => {
                 borderRadius: 20,
                 border: `1px solid ${isActive ? cat.color + "55" : theme.colors.border}`,
                 opacity: cardProgress,
-                transform: `translateY(${cardY}px)`,
+                transform: `translateY(${cardY + cardBreathe}px)`,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -328,8 +337,8 @@ export const Proof: React.FC = () => {
               {/* Category label */}
               <span
                 style={{
-                  fontSize: 15,
-                  fontWeight: 700,
+                  fontSize: 26,
+                  fontWeight: 800,
                   color: cat.color,
                   letterSpacing: 2,
                   textTransform: "uppercase",
@@ -359,11 +368,16 @@ export const Proof: React.FC = () => {
           {/* User avatar dots */}
           {[0, 1, 2, 3, 4].map((i) => {
             const avatarDelay = 271 + i * 6;
-            const avatarProgress = spring({
-              frame: frame - avatarDelay,
-              fps,
-              config: { damping: 60, mass: 0.3 },
-            });
+            const avatarProgress = interpolate(
+              frame - avatarDelay,
+              [0, 20],
+              [0, 1],
+              {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+                easing: Easing.bezier(0.19, 1, 0.22, 1),
+              },
+            );
             return (
               <div
                 key={`user-${i}`}
@@ -487,8 +501,8 @@ export const Proof: React.FC = () => {
 
         <span
           style={{
-            fontSize: 14,
-            fontWeight: 700,
+            fontSize: 20,
+            fontWeight: 800,
             color: theme.colors.textMuted,
             letterSpacing: 2.5,
             textTransform: "uppercase",

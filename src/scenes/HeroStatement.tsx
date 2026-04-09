@@ -68,8 +68,8 @@ export const HeroStatement: React.FC = () => {
       {/* Section label */}
       <span
         style={{
-          fontSize: 13,
-          fontWeight: 600,
+          fontSize: 18,
+          fontWeight: 700,
           color: theme.colors.accent,
           letterSpacing: 3,
           textTransform: "uppercase",
@@ -84,8 +84,8 @@ export const HeroStatement: React.FC = () => {
       <div style={{ opacity: headProgress, transform: `translateY(${headY}px)` }}>
         <h1
           style={{
-            fontSize: 72,
-            fontWeight: 800,
+            fontSize: 84,
+            fontWeight: 900,
             color: theme.colors.textPrimary,
             margin: 0,
             lineHeight: 1.1,
@@ -112,10 +112,10 @@ export const HeroStatement: React.FC = () => {
       {/* Sub-body */}
       <p
         style={{
-          fontSize: 22,
+          fontSize: 28,
           color: theme.colors.textSecondary,
           lineHeight: 1.7,
-          maxWidth: 760,
+          maxWidth: 800,
           margin: "28px 0 0",
           opacity: bodyProgress,
           transform: `translateY(${bodyY}px)`,

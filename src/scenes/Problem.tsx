@@ -2,9 +2,7 @@ import {
   AbsoluteFill,
   Easing,
   interpolate,
-  spring,
   useCurrentFrame,
-  useVideoConfig,
 } from "remotion";
 import { theme } from "../theme";
 
@@ -27,7 +25,6 @@ const DEBRIS_COUNT = 12;
 
 export const Problem: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
   /* ── Scene transitions ──────────────────────────────────── */
   const entryFade = interpolate(frame, [0, 15], [0, 1], {
@@ -72,30 +69,30 @@ export const Problem: React.FC = () => {
 
   /* ── Wall 1: Complexity — appears at ~frame 150
        (VO "Technical complexity" hits at frame 158) ─────── */
-  const wall1 = spring({
-    frame: frame - 150,
-    fps,
-    config: { damping: 80, mass: 0.5 },
+  const wall1 = interpolate(frame, [150, 170], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.19, 1, 0.22, 1),
   });
 
   /* ── Wall 2: Wrong partner — appears at ~frame 244
        (VO "wrong build partner" hits at frame 252) ────── */
-  const wall2 = spring({
-    frame: frame - 244,
-    fps,
-    config: { damping: 80, mass: 0.5 },
+  const wall2 = interpolate(frame, [244, 264], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.19, 1, 0.22, 1),
   });
 
   /* ── Founder + product lead label reveals ─────────────── */
-  const founderReveal = spring({
-    frame: frame - 11,
-    fps,
-    config: { damping: 100, mass: 0.4 },
+  const founderReveal = interpolate(frame, [11, 30], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.19, 1, 0.22, 1),
   });
-  const leadReveal = spring({
-    frame: frame - 50,
-    fps,
-    config: { damping: 100, mass: 0.4 },
+  const leadReveal = interpolate(frame, [50, 69], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.19, 1, 0.22, 1),
   });
   const labelsFade = interpolate(frame, [85, 105], [1, 0], {
     extrapolateLeft: "clamp",
@@ -158,6 +155,10 @@ export const Problem: React.FC = () => {
     ? interpolate(frame % 25, [0, 12, 25], [0.12, 0.4, 0.12])
     : 0;
 
+  /* ── Continuous 2-second breathing cycle ─────────────────── */
+  const breathe = Math.sin(frame * Math.PI / 30);
+  const breatheY = breathe * 2;
+
   /* ── Crack lines on walls after impact ─────────────────── */
   const crack1 = interpolate(frame, [158, 175], [0, 1], {
     extrapolateLeft: "clamp",
@@ -209,6 +210,7 @@ export const Problem: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          transform: `translateY(${breatheY}px)`,
           opacity: interpolate(frame, [5, 25], [0, 0.8], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
@@ -255,8 +257,8 @@ export const Problem: React.FC = () => {
         </svg>
         <span
           style={{
-            fontSize: 11,
-            fontWeight: 700,
+            fontSize: 22,
+            fontWeight: 800,
             color: theme.colors.textMuted,
             letterSpacing: 2,
             textTransform: "uppercase",
@@ -310,8 +312,8 @@ export const Problem: React.FC = () => {
           </div>
           <span
             style={{
-              fontSize: 13,
-              fontWeight: 700,
+              fontSize: 24,
+              fontWeight: 800,
               color: theme.colors.textSecondary,
               letterSpacing: 2,
               textTransform: "uppercase",
@@ -358,8 +360,8 @@ export const Problem: React.FC = () => {
           </div>
           <span
             style={{
-              fontSize: 13,
-              fontWeight: 700,
+              fontSize: 24,
+              fontWeight: 800,
               color: theme.colors.textSecondary,
               letterSpacing: 2,
               textTransform: "uppercase",
@@ -561,8 +563,8 @@ export const Problem: React.FC = () => {
           </svg>
           <span
             style={{
-              fontSize: 12,
-              fontWeight: 700,
+              fontSize: 24,
+              fontWeight: 800,
               color: theme.colors.textMuted,
               letterSpacing: 2.5,
               textTransform: "uppercase",
@@ -669,8 +671,8 @@ export const Problem: React.FC = () => {
           </div>
           <span
             style={{
-              fontSize: 12,
-              fontWeight: 700,
+              fontSize: 24,
+              fontWeight: 800,
               color: theme.colors.textMuted,
               letterSpacing: 2.5,
               textTransform: "uppercase",
@@ -752,8 +754,8 @@ export const Problem: React.FC = () => {
           position: "absolute",
           bottom: 60,
           left: "10%",
-          fontSize: 10,
-          fontWeight: 700,
+          fontSize: 22,
+          fontWeight: 800,
           color: theme.colors.textMuted,
           letterSpacing: 2,
           textTransform: "uppercase",

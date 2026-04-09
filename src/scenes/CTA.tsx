@@ -25,18 +25,16 @@ export const CTA: React.FC = () => {
   });
 
   /* ── Logo ───────────────────────────────────────────────── */
-  const logoProgress = spring({
-    frame,
-    fps,
-    config: { damping: 80, mass: 0.5 },
+  const logoProgress = interpolate(frame, [0, 20], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
-  const logoScale = interpolate(logoProgress, [0, 1], [0.6, 1]);
+  const logoScale = interpolate(logoProgress, [0, 1], [0.85, 1]);
 
   /* ── Phase 1: "Building something that matters" (f13-75) ─ */
-  const buildReveal = spring({
-    frame: frame - 13,
-    fps,
-    config: { damping: 80, mass: 0.5 },
+  const buildReveal = interpolate(frame, [13, 35], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
   const buildFade = interpolate(frame, [68, 82], [1, 0], {
     extrapolateLeft: "clamp",
@@ -85,6 +83,11 @@ export const CTA: React.FC = () => {
     [0, 125, 250, 375],
     [0.1, 0.25, 0.15, 0.2],
   );
+
+  /* ── Continuous 2-second breathing cycle ─────────────────── */
+  const breathe = Math.sin(frame * Math.PI / 30);
+  const breatheY = breathe * 3;
+  const breatheScale = 1 + breathe * 0.008;
 
   return (
     <AbsoluteFill
@@ -167,7 +170,7 @@ export const CTA: React.FC = () => {
       <div
         style={{
           opacity: logoProgress,
-          transform: `scale(${logoScale})`,
+          transform: `scale(${logoScale * breatheScale}) translateY(${breatheY}px)`,
           marginBottom: 40,
         }}
       >
@@ -234,8 +237,8 @@ export const CTA: React.FC = () => {
       <div style={{ position: "relative", display: "inline-block" }}>
         <h1
           style={{
-            fontSize: 56,
-            fontWeight: 800,
+            fontSize: 80,
+            fontWeight: 900,
             color: theme.colors.textPrimary,
             margin: 0,
             textAlign: "center",
@@ -243,7 +246,7 @@ export const CTA: React.FC = () => {
             letterSpacing: "-1.5px",
             maxWidth: 900,
             clipPath: `inset(0 ${100 - lineReveal}% 0 0)`,
-            transform: `scale(${textScale})`,
+            transform: `scale(${textScale}) translateY(${breatheY * 0.5}px)`,
             position: "relative",
           }}
         >
@@ -292,35 +295,53 @@ export const CTA: React.FC = () => {
         )}
       </div>
 
-      {/* URL */}
+      {/* URL + Email */}
       <div
         style={{
-          marginTop: 48,
+          marginTop: 56,
           opacity: urlProgress,
           transform: `scale(${urlScale})`,
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          gap: 8,
+          gap: 18,
         }}
       >
-        <div
-          style={{
-            width: 8,
-            height: 8,
-            borderRadius: "50%",
-            background: theme.colors.accent,
-          }}
-        />
-        <span
-          style={{
-            fontSize: 24,
-            fontWeight: 600,
-            color: theme.colors.textSecondary,
-            letterSpacing: 1,
-          }}
-        >
-          nativewit.in
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {/* Globe/site icon */}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke={theme.colors.accent} strokeWidth="2" />
+            <ellipse cx="12" cy="12" rx="4" ry="10" stroke={theme.colors.accent} strokeWidth="1.5" />
+            <line x1="2" y1="12" x2="22" y2="12" stroke={theme.colors.accent} strokeWidth="1.5" />
+          </svg>
+          <span
+            style={{
+              fontSize: 32,
+              fontWeight: 800,
+              color: theme.colors.textPrimary,
+              letterSpacing: 1,
+            }}
+          >
+            www.nativewit.in
+          </span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {/* Email icon */}
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none">
+            <rect x="1" y="1" width="22" height="18" rx="3" stroke={theme.colors.textMuted} strokeWidth="2" />
+            <polyline points="1,1 12,11 23,1" fill="none" stroke={theme.colors.textMuted} strokeWidth="2" />
+          </svg>
+          <span
+            style={{
+              fontSize: 26,
+              fontWeight: 700,
+              color: theme.colors.textSecondary,
+              letterSpacing: 0.5,
+            }}
+          >
+            hello@nativewit.in
+          </span>
+        </div>
       </div>
     </AbsoluteFill>
   );

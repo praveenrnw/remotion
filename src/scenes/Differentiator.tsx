@@ -2,9 +2,7 @@ import {
   AbsoluteFill,
   Easing,
   interpolate,
-  spring,
   useCurrentFrame,
-  useVideoConfig,
 } from "remotion";
 import { theme } from "../theme";
 
@@ -24,7 +22,6 @@ import { theme } from "../theme";
 
 export const Differentiator: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
   /* ── Scene transitions ──────────────────────────────────── */
   const entryFade = interpolate(frame, [0, 15], [0, 1], {
@@ -83,6 +80,10 @@ export const Differentiator: React.FC = () => {
   const dataFlowT = frame > 495
     ? ((frame - 495) % 40) / 40
     : 0;
+
+  /* ── Continuous 2-second breathing cycle ─────────────────── */
+  const breathe = Math.sin(frame * Math.PI / 30);
+  const breatheY = breathe * 3;
 
   return (
     <AbsoluteFill
@@ -322,11 +323,12 @@ export const Differentiator: React.FC = () => {
 
         <span
           style={{
-            fontSize: 13,
-            fontWeight: 700,
+            fontSize: 24,
+            fontWeight: 800,
             color: theme.colors.accent,
             letterSpacing: 3,
             textTransform: "uppercase",
+            transform: `translateY(${breatheY}px)`,
           }}
         >
           How we think
@@ -404,7 +406,7 @@ export const Differentiator: React.FC = () => {
             y="55"
             textAnchor="middle"
             fill={theme.colors.accent}
-            fontSize="11"
+            fontSize="18"
             fontWeight="700"
             letterSpacing="2"
             opacity={interpolate(blueprintDraw, [0.25, 0.4], [0, 0.8], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}
@@ -430,7 +432,7 @@ export const Differentiator: React.FC = () => {
             y="195"
             textAnchor="middle"
             fill={theme.colors.blue}
-            fontSize="11"
+            fontSize="18"
             fontWeight="700"
             letterSpacing="2"
             opacity={interpolate(blueprintDraw, [0.35, 0.5], [0, 0.8], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}
@@ -456,7 +458,7 @@ export const Differentiator: React.FC = () => {
             y="195"
             textAnchor="middle"
             fill={theme.colors.green}
-            fontSize="11"
+            fontSize="18"
             fontWeight="700"
             letterSpacing="2"
             opacity={interpolate(blueprintDraw, [0.35, 0.5], [0, 0.8], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}
@@ -482,7 +484,7 @@ export const Differentiator: React.FC = () => {
             y="195"
             textAnchor="middle"
             fill="#8b5cf6"
-            fontSize="11"
+            fontSize="18"
             fontWeight="700"
             letterSpacing="2"
             opacity={interpolate(blueprintDraw, [0.35, 0.5], [0, 0.8], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}
@@ -598,7 +600,7 @@ export const Differentiator: React.FC = () => {
             y="330"
             textAnchor="middle"
             fill={theme.colors.textMuted}
-            fontSize="10"
+            fontSize="16"
             fontWeight="700"
             letterSpacing="2"
             opacity={interpolate(blueprintDraw, [0.6, 0.75], [0, 0.6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}
@@ -635,12 +637,13 @@ export const Differentiator: React.FC = () => {
           style={{
             position: "absolute",
             bottom: "12%",
-            fontSize: 13,
-            fontWeight: 700,
+            fontSize: 24,
+            fontWeight: 800,
             color: theme.colors.textMuted,
             letterSpacing: 3,
             textTransform: "uppercase",
             opacity: phase2,
+            transform: `translateY(${breatheY}px)`,
           }}
         >
           Architecture first
@@ -668,7 +671,7 @@ export const Differentiator: React.FC = () => {
             left: "50%",
             transform: "translateX(-50%)",
             width: interpolate(
-              spring({ frame: frame - 290, fps, config: { damping: 80 } }),
+              interpolate(frame, [290, 315], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.19, 1, 0.22, 1) }),
               [0, 1],
               [0, 300],
             ),
@@ -687,7 +690,7 @@ export const Differentiator: React.FC = () => {
               flexDirection: "column",
               alignItems: "center",
               transform: `translateX(${interpolate(
-                spring({ frame: frame - 288, fps, config: { damping: 60 } }),
+                interpolate(frame, [288, 310], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.19, 1, 0.22, 1) }),
                 [0, 1],
                 [-30, 0],
               )}px)`,
@@ -713,8 +716,8 @@ export const Differentiator: React.FC = () => {
             />
             <span
               style={{
-                fontSize: 10,
-                fontWeight: 700,
+                fontSize: 22,
+                fontWeight: 800,
                 color: theme.colors.textMuted,
                 letterSpacing: 2,
                 marginTop: 8,
@@ -732,7 +735,7 @@ export const Differentiator: React.FC = () => {
               fontSize: 48,
               fontWeight: 800,
               color: theme.colors.accent,
-              opacity: spring({ frame: frame - 296, fps, config: { damping: 80 } }),
+              opacity: interpolate(frame, [296, 316], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.19, 1, 0.22, 1) }),
             }}
           >
             =
@@ -755,7 +758,7 @@ export const Differentiator: React.FC = () => {
               flexDirection: "column",
               alignItems: "center",
               transform: `translateX(${interpolate(
-                spring({ frame: frame - 288, fps, config: { damping: 60 } }),
+                interpolate(frame, [288, 310], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.19, 1, 0.22, 1) }),
                 [0, 1],
                 [30, 0],
               )}px)`,
@@ -781,8 +784,8 @@ export const Differentiator: React.FC = () => {
             />
             <span
               style={{
-                fontSize: 10,
-                fontWeight: 700,
+                fontSize: 22,
+                fontWeight: 800,
                 color: theme.colors.accent,
                 letterSpacing: 2,
                 marginTop: 8,
@@ -801,9 +804,9 @@ export const Differentiator: React.FC = () => {
               position: "absolute",
               top: "24%",
               right: "30%",
-              opacity: spring({ frame: frame - 330, fps, config: { damping: 80 } }),
+              opacity: interpolate(frame, [330, 348], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.19, 1, 0.22, 1) }),
               transform: `scale(${interpolate(
-                spring({ frame: frame - 330, fps, config: { damping: 60 } }),
+                interpolate(frame, [330, 348], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.19, 1, 0.22, 1) }),
                 [0, 1],
                 [0.6, 1],
               )})`,
@@ -848,11 +851,16 @@ export const Differentiator: React.FC = () => {
             );
             const qOpacity = 1 - localMorph;
             const cOpacity = localMorph;
-            const qProgress = spring({
-              frame: frame - qDelay,
-              fps,
-              config: { damping: 60, mass: 0.4 },
-            });
+            const qProgress = interpolate(
+              frame - qDelay,
+              [0, 20],
+              [0, 1],
+              {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+                easing: Easing.bezier(0.19, 1, 0.22, 1),
+              },
+            );
 
             /* Burst ring on checkmark appearance */
             const burstScale = interpolate(localMorph, [0, 0.5, 1], [0.3, 1.3, 1], {
@@ -1089,7 +1097,7 @@ export const Differentiator: React.FC = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 16,
+              fontSize: 24,
               fontWeight: 800,
               color: theme.colors.bg,
             }}
@@ -1098,11 +1106,12 @@ export const Differentiator: React.FC = () => {
           </div>
           <span
             style={{
-              fontSize: 13,
-              fontWeight: 700,
+              fontSize: 24,
+              fontWeight: 800,
               color: theme.colors.textMuted,
               letterSpacing: 3,
               textTransform: "uppercase",
+              transform: `translateY(${breatheY}px)`,
             }}
           >
             Embedded in every layer
