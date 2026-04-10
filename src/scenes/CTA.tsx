@@ -9,6 +9,8 @@ import {
   useVideoConfig,
 } from "remotion";
 import { theme } from "../theme";
+import { GeometricBg } from "../components/GeometricBg";
+import { RobotGuide } from "../components/RobotGuide";
 
 /**
  * CTA — 65.5–78s (375 frames)
@@ -101,6 +103,8 @@ export const CTA: React.FC = () => {
         opacity: entryFade,
       }}
     >
+      <GeometricBg frame={frame} opacity={0.03} />
+
       {/* Ambient glow */}
       <div
         style={{
@@ -343,6 +347,8 @@ export const CTA: React.FC = () => {
           </span>
         </div>
       </div>
+
+      <RobotGuide frame={frame} x={92} y={88} scale={0.55} expression="waving" />
     </AbsoluteFill>
   );
 };

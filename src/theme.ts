@@ -16,5 +16,5 @@ export const theme = {
     green: "#22c55e",
     blue: "#3b82f6",
   },
-  font: "'Nunito', 'Inter', 'Helvetica Neue', Arial, sans-serif",
+  font: "'Inter', 'Helvetica Neue', Arial, sans-serif",
 } as const;
