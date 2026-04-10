@@ -30,8 +30,8 @@ export const Differentiator: React.FC = () => {
   const lineY = interpolate(frame, [0, 645], [8, 92], { easing: Easing.bezier(0.19, 1, 0.22, 1) });
 
   const phase1 = interpolate(frame, [0, 30, 125, 150], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const phase2 = interpolate(frame, [138, 168, 258, 286], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const phase3 = interpolate(frame, [270, 292, 472, 500], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const phase2 = interpolate(frame, [138, 168, 248, 270], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const phase3 = interpolate(frame, [255, 272, 472, 500], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const phase4 = interpolate(frame, [485, 515, 610, 645], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   const blueprintDraw = interpolate(frame, [138, 260], [0, 1], {
@@ -363,8 +363,8 @@ export const Differentiator: React.FC = () => {
         {/* Title */}
         <div style={{
           position: "absolute", top: 40, display: "flex", alignItems: "center", gap: 16,
-          opacity: interpolate(frame, [272, 286], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
-          transform: `translateY(${interpolate(frame, [272, 286], [15, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}px)`,
+          opacity: interpolate(frame, [256, 268], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+          transform: `translateY(${interpolate(frame, [256, 268], [15, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}px)`,
         }}>
           <span style={{ fontSize: 36, fontWeight: 900, color: theme.colors.textSecondary, letterSpacing: 4, textTransform: "uppercase" }}>We work like a co-founder</span>
         </div>
@@ -376,19 +376,19 @@ export const Differentiator: React.FC = () => {
           <div style={{
             position: "absolute", bottom: 50, left: "50%", transform: "translateX(-50%)", width: 700, height: 8, borderRadius: 4,
             background: `linear-gradient(90deg, ${theme.colors.textMuted}33, ${theme.colors.textSecondary}55, ${theme.colors.textMuted}33)`,
-            opacity: interpolate(frame, [272, 284], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+            opacity: interpolate(frame, [255, 265], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           }} />
 
           {/* Shared monitor in center */}
           <div style={{
             position: "absolute", top: 30, left: "50%", transform: "translateX(-50%)",
-            opacity: interpolate(frame, [274, 287], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+            opacity: interpolate(frame, [257, 268], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           }}>
             <svg width="240" height="180" viewBox="0 0 200 150">
               <rect x="10" y="5" width="180" height="110" rx="8" fill={theme.colors.surface} stroke={theme.colors.textSecondary} strokeWidth="2" />
               {/* Screen content — code lines */}
               {Array.from({ length: 5 }).map((_, l) => {
-                const lineP = interpolate(frame, [282 + l * 3, 290 + l * 3], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+                const lineP = interpolate(frame, [264 + l * 3, 272 + l * 3], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
                 const widths = [90, 70, 110, 55, 85];
                 return <rect key={l} x="25" y={22 + l * 16} width={widths[l] * lineP} height="6" rx="2"
                   fill={l === 2 ? theme.colors.green : theme.colors.accent} opacity={l === 2 ? 0.5 : 0.2} />;
@@ -405,8 +405,8 @@ export const Differentiator: React.FC = () => {
           {/* Left person — "YOU" with laptop */}
           <div style={{
             position: "absolute", left: 60, bottom: 60,
-            opacity: interpolate(frame, [276, 290], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
-            transform: `translateX(${interpolate(frame, [276, 290], [-30, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}px)`,
+            opacity: interpolate(frame, [258, 270], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+            transform: `translateX(${interpolate(frame, [258, 270], [-30, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}px)`,
           }}>
             <svg width="100" height="150" viewBox="0 0 100 150">
               {/* Head */}
@@ -433,8 +433,8 @@ export const Differentiator: React.FC = () => {
           {/* Right person — "NATIVEWIT" with laptop */}
           <div style={{
             position: "absolute", right: 60, bottom: 60,
-            opacity: interpolate(frame, [279, 292], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
-            transform: `translateX(${interpolate(frame, [279, 292], [30, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}px)`,
+            opacity: interpolate(frame, [260, 272], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+            transform: `translateX(${interpolate(frame, [260, 272], [30, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}px)`,
           }}>
             <svg width="100" height="150" viewBox="0 0 100 150">
               {/* Head */}
@@ -460,9 +460,9 @@ export const Differentiator: React.FC = () => {
 
           {/* Chat bubbles between them */}
           {[
-            { text: "What if we...", side: "left", delay: 294 },
-            { text: "Yes! And also...", side: "right", delay: 308 },
-            { text: "Let's ship it ✓", side: "left", delay: 322 },
+            { text: "What if we...", side: "left", delay: 276 },
+            { text: "Yes! And also...", side: "right", delay: 290 },
+            { text: "Let's ship it ✓", side: "left", delay: 304 },
           ].map((bubble, i) => {
             const bP = interpolate(frame, [bubble.delay, bubble.delay + 15], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
             const bFade = interpolate(frame, [bubble.delay + 40, bubble.delay + 55], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -481,13 +481,13 @@ export const Differentiator: React.FC = () => {
 
           {/* "Same team" connecting arc */}
           <svg width="900" height="440" viewBox="0 0 800 400" style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-            <path d="M200 340 Q450 390 700 340" fill="none" stroke={theme.colors.accent} strokeWidth="2" opacity={interpolate(frame, [299, 314], [0, 0.35], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })} strokeDasharray="8 4" />
+            <path d="M200 340 Q450 390 700 340" fill="none" stroke={theme.colors.accent} strokeWidth="2" opacity={interpolate(frame, [282, 295], [0, 0.35], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })} strokeDasharray="8 4" />
           </svg>
 
           {/* Whiteboard / sticky notes */}
           <div style={{
             position: "absolute", top: 20, left: 20,
-            opacity: interpolate(frame, [289, 302], [0, 0.7], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+            opacity: interpolate(frame, [271, 283], [0, 0.7], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           }}>
             <svg width="100" height="100" viewBox="0 0 80 80">
               <rect x="2" y="2" width="76" height="76" rx="6" fill={theme.colors.surfaceLight} stroke={theme.colors.border} strokeWidth="1.5" />
@@ -501,7 +501,7 @@ export const Differentiator: React.FC = () => {
           {/* Shared doc icon */}
           <div style={{
             position: "absolute", top: 20, right: 20,
-            opacity: interpolate(frame, [292, 304], [0, 0.7], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+            opacity: interpolate(frame, [274, 285], [0, 0.7], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           }}>
             <svg width="80" height="100" viewBox="0 0 60 80">
               <rect x="4" y="4" width="52" height="72" rx="6" fill={theme.colors.surface} stroke={theme.colors.border} strokeWidth="1.5" />
@@ -515,7 +515,7 @@ export const Differentiator: React.FC = () => {
         {/* Question marks → Checkmarks */}
         <div style={{ display: "flex", gap: 40, zIndex: 1 }}>
           {[0, 1, 2].map((i) => {
-            const qDelay = 315 + i * 14;
+            const qDelay = 298 + i * 12;
             const localMorph = interpolate(frame, [qDelay + 22, qDelay + 50], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
             const qP = interpolate(frame - qDelay, [0, 20], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.19, 1, 0.22, 1) });
 
